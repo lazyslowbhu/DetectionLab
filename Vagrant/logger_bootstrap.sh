@@ -102,6 +102,8 @@ fix_eth1_static_ip() {
   #netplan apply
 
   # Fix eth1 if the IP isn't set correctly
+  output = $(ip -4 addr show eth1)
+  echo $output
   ETH1_IP=$(ip -4 addr show eth1 | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -1)
   if [ "$ETH1_IP" != "192.168.56.105" ]; then
     echo "Incorrect IP Address settings detected. Attempting to fix."
