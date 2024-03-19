@@ -89,7 +89,7 @@ fix_eth1_static_ip() {
     echo "[*] Using KVM, no need to fix DHCP for eth1 iface"
     return 0
   fi
-  wcho "1st step"
+  echo "1st step"
   if [ -f /sys/class/net/eth2/address ]; then
     if [ "$(cat /sys/class/net/eth2/address)" == "00:50:56:a3:b1:c4" ]; then
       echo "[*] Using ESXi, no need to change anything"
@@ -98,8 +98,8 @@ fix_eth1_static_ip() {
   fi
   # TODO: try to set correctly directly through vagrant net config
   echo "2nd step"
-  netplan set --origin-hint 90-disable-eth1-dhcp ethernets.eth1.dhcp4=false
-  netplan apply
+  #netplan set --origin-hint 90-disable-eth1-dhcp ethernets.eth1.dhcp4=false
+  #netplan apply
 
   # Fix eth1 if the IP isn't set correctly
   ETH1_IP=$(ip -4 addr show eth1 | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -1)
@@ -623,8 +623,8 @@ configure_splunk_inputs() {
 
 main() {
   apt_install_prerequisites
-  #modify_motd
-  #test_prerequisites
+  modify_motd
+  test_prerequisites
   fix_eth1_static_ip
   install_splunk
   download_palantir_osquery_config
