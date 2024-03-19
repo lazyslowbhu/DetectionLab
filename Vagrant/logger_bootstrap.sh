@@ -83,11 +83,13 @@ test_prerequisites() {
 }
 
 fix_eth1_static_ip() {
+  echo "Entering fix eth function"
   USING_KVM=$(sudo lsmod | grep kvm)
   if [ -n "$USING_KVM" ]; then
     echo "[*] Using KVM, no need to fix DHCP for eth1 iface"
     return 0
   fi
+  wcho "1st step"
   if [ -f /sys/class/net/eth2/address ]; then
     if [ "$(cat /sys/class/net/eth2/address)" == "00:50:56:a3:b1:c4" ]; then
       echo "[*] Using ESXi, no need to change anything"
@@ -95,6 +97,7 @@ fix_eth1_static_ip() {
     fi
   fi
   # TODO: try to set correctly directly through vagrant net config
+  echo "2nd step"
   netplan set --origin-hint 90-disable-eth1-dhcp ethernets.eth1.dhcp4=false
   netplan apply
 
