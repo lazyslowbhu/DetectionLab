@@ -620,7 +620,7 @@ configure_splunk_inputs() {
 
 main() {
   apt_install_prerequisites
-  modify_motd
+  #modify_motd
   #test_prerequisites
   fix_eth1_static_ip
   install_splunk
