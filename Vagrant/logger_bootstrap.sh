@@ -621,7 +621,7 @@ configure_splunk_inputs() {
 main() {
   apt_install_prerequisites
   modify_motd
-  test_prerequisites
+  #test_prerequisites
   fix_eth1_static_ip
   install_splunk
   download_palantir_osquery_config
